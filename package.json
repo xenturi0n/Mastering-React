@@ -1,7 +1,7 @@
 {
-  "name": "compilador-react",
+  "name": "Mastering-React",
   "version": "1.0.0",
-  "description": "Trabajo rapido con gulp, browserify, babelify, watchify y react",
+  "description": "Ejercicios del libro mastering react",
   "main": "index.js",
   "scripts": {
     "inicializar": "gulp initialize",
