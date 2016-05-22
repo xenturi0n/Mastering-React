@@ -8,24 +8,28 @@ class KanbanBoard extends Component{
                 <CardList id="todo" title="To Do"
                           cards={
                               this.props.dataCards.filter((card)=>card.status === "todo")
-                          } />
+                          } 
+                          taskCallbacks={this.props.taskCallbacks} />
                           
                 <CardList id="in-progress" title="In Progress"
                           cards={
                               this.props.dataCards.filter((card)=>card.status === "in-progress")
-                          } />
+                          } 
+                          taskCallbacks={this.props.taskCallbacks} />
                           
                 <CardList id="done" title="Done"
                           cards={
                               this.props.dataCards.filter((card)=>card.status === "done")
-                          } />
+                          } 
+                          taskCallbacks={this.props.taskCallbacks}/>
             </div>
         );
     }
 }
 
 KanbanBoard.propTypes = {
-    cards: PropTypes.arrayOf(PropTypes.object)
+    cards: PropTypes.arrayOf(PropTypes.object),
+    taskCallbacks: PropTypes.object
 }
 
 export default KanbanBoard;

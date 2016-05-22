@@ -5,16 +5,11 @@ import Card from './card.jsx';
 class CardList extends Component{
     render(){
         var cards = this.props.cards.map((card)=>{
-            return (<Card id={card.id}
-                          key={card.id}
-                          description = {card.description}
-                          title = {card.title}
-                          tasks = {card.tasks} 
-                          color = {card.color} />);
+            return (<Card key={card.id} taskCallbacks={this.props.taskCallbacks} {...card}/>);
             });
         return(
             <div className="cardList">
-                <h1>{this.props.title}</h1>
+                <h3>{this.props.title}</h3>
                 {cards}
             </div>
         );
@@ -23,6 +18,7 @@ class CardList extends Component{
 
 CardList.propTypes = {
     title: PropTypes.string.isRequired,
-    cards: PropTypes.arrayOf(PropTypes.object)
+    cards: PropTypes.arrayOf(PropTypes.object),
+    taskCallbacks: PropTypes.object
 }
 export default CardList;
