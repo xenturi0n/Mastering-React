@@ -170,7 +170,9 @@ function bundle(bundler) {
             message: 'Archivo Generado: \n-----------\n<%= file.relative %>\n-----------',
         })) // Output the file being created
         .pipe(bundleTimer) // Output time timing of the file creation
-        .pipe(browserSync.stream());
+        .pipe(browserSync.stream({match:"**/*.js"}));
+        
+        // browserSync.reload("*.js");
 }
 
 //con el parametro --production no se ejecuta watchify
@@ -211,7 +213,7 @@ gulp.task('scss', function(){
             message: 'Archivo Generado: \n-----------\n<%= file.relative %>\n-----------',
         })) // Output the file being created
         .pipe(bundleTimer) // Output time timing of the file creation   
-        .pipe(browserSync.stream());
+        .pipe(browserSync.stream({match:"**/*.css"}));
 });
 
 gulp.task('html', function(){
@@ -220,7 +222,7 @@ gulp.task('html', function(){
     console.log("ejecutando tarea HTML <<<<<<<<<<")
     return gulp.src(config.html.src)
         .pipe(gulp.dest(config.html.outputDir))
-        .pipe(browserSync.stream());
+        .pipe(browserSync.stream({once:true}));
 });
 
 gulp.task('images', function(){
@@ -235,6 +237,12 @@ gulp.task('images', function(){
         .pipe(browserSync.stream());
 });
 
+gulp.task('reload', function(cb){
+    browserSync.reload();
+    cb();
+});
+
+
 //Tarea para observar cambios en src
 //la observacion de los cambios en los js la hace
 //directamente watchify
@@ -243,6 +251,7 @@ gulp.task('watch', function(){
     gulp.watch(config.html.watch, ['html']);
     gulp.watch(config.scss.watch, ['scss']);
     gulp.watch(config.images.watch, ['images']);
+    // gulp.watch(config.js.outputDir+'/app.js', browserSync.reload);
 });
 
 gulp.task('start', ['clean:dist', 'copy', 'serve', 'js', 'scss', 'html', 'images', 'watch']);

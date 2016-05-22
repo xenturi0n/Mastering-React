@@ -1,31 +1,5 @@
-@import 'foundation';
+@import 'foundation-sites/foundation';
 
-#topbar{
-    background: $black;
-    color: white;
-    h4{
-        text-transform: uppercase;
-        margin: 10px 0;
-    }
-}
+@import 'base';
 
-#sidebar{
-    background: lighten($black, 25%);
-    color: white;
-    height: 100vh;
-    li{
-        border-bottom: 1px solid lighten($color: $black, $amount: 50%);
-        a{
-            color: white;
-            &:hover{
-                color: lighten(tomato, 15%);
-            }
-        }
-    }
-}
-#sample{
-    // background: lightcoral;
-    margin-top: 20px;
-    box-shadow: 2px 4px 5px #999;
-    border: 1px solid lighten($color: $black, $amount: 85%);
-}
+@import 'pages/kanbanApp/kanbanApp';
