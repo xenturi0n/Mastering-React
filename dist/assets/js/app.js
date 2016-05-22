@@ -21202,28 +21202,11 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var dataCards = [{
-    id: 1,
-    title: "Read The Book Pro React",
-    description: "Code along with the samples in the book. The complete source can be found at [github](https://github.com/pro-react)",
-    color: '#BD8D31',
-    status: "todo",
-    tasks: [{ id: 1, name: "Contact List Example", done: true }, { id: 2, name: "Kanban Example", done: false }, { id: 3, name: "My own experiments", done: false }]
-}, {
-    id: 2,
-    title: "Card Two title",
-    description: "Card detailed description",
-    color: '#3A7E28',
-    status: "in-progress",
-    tasks: []
-}, {
-    id: 3,
-    title: "Card Three title",
-    description: "Card detailed description",
-    color: '#BC8DA1',
-    status: "done",
-    tasks: []
-}];
+var API_URL = 'http://kanbanapi.pro-react.com';
+var API_HEADERS = {
+    'Content-Type': 'application/json',
+    Autorization: 'zdsdkfyw23425zxcvjh342542kjh'
+};
 
 var KanbanApp = function (_Component) {
     _inherits(KanbanApp, _Component);
@@ -21231,13 +21214,31 @@ var KanbanApp = function (_Component) {
     function KanbanApp() {
         _classCallCheck(this, KanbanApp);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(KanbanApp).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(KanbanApp).apply(this, arguments));
+
+        _this.state = {
+            cards: []
+        };
+        return _this;
     }
 
     _createClass(KanbanApp, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            fetch(API_URL + '/cards', { headers: API_HEADERS }).then(function (response) {
+                return response.json();
+            }).then(function (responseData) {
+                _this2.setState({ cards: responseData });
+            }).catch(function (error) {
+                console.log('Error fetching and parsing data', error);
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            return _react2.default.createElement(_kanbanBoard2.default, { dataCards: dataCards });
+            return _react2.default.createElement(_kanbanBoard2.default, { dataCards: this.state.cards });
         }
     }]);
 
