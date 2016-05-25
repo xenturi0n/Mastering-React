@@ -48,7 +48,7 @@ var config = {
     },
     scss: {
         src: './src/assets/scss',
-        watch: 'src/assets/scss/**/*.scss',     //gulp watch no funciona con rutas absolutas
+        watch: 'src/assets/scss/**/*',     //gulp watch no funciona con rutas absolutas
         outputDir: './dist/assets/css',
         inputFile: './src/assets/scss/main.scss',
         inputFileName: 'main.scss',
@@ -182,7 +182,7 @@ gulp.task('js', function(){
         
         var bundler = browserify(config.js.src, args) // Browserify
             .plugin(watchify, { ignoreWatch: ['**/node_modules/**', '**/bower_components/**'] }) // Watchify to watch source file changes
-            .transform(babelify, { presets: ['es2015', 'react'] }); // Babel tranforms
+            .transform(babelify, { presets: ['es2015', 'react'], plugins: ['lodash'] }); // Babel tranforms
 
         bundle(bundler); // Run the bundle the first time (required for Watchify to kick in)
 
@@ -192,7 +192,7 @@ gulp.task('js', function(){
     }else{
         var args = {debug: false};
         var bundler = browserify(config.js.src, args) // Browserify
-            .transform(babelify, { presets: ['es2015', 'react'] }); // Babel tranforms
+            .transform(babelify, { presets: ['es2015', 'react'], plugins: ['lodash'] }); // Babel tranforms
 
         bundle(bundler); // Run the bundle the first time (required for Watchify to kick in)
     }
