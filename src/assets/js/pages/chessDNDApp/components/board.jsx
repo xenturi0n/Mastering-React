@@ -2,12 +2,18 @@ import React, { Component, PropTypes } from 'react';
 import _range from 'lodash/range';
 import _map from 'lodash/map';
 import _reverse from 'lodash/reverse';
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
+
 
 import Square from './square.jsx';
 import Knight from './knight.jsx';
+import BoardSquare from './boardSquare.jsx';
+
 
 import { moveKnight, canMoveKnight } from './game.js';
-
+ 
 class Board extends Component {
     _renderSquares() {
         var squares = _map(_range(64), (i) => {
@@ -25,17 +31,22 @@ class Board extends Component {
                 <div key={i} 
                      style={{width:'80px', height:'80px'}} 
                      onClick={()=> this._handleSquareClick(x, y)}>
-                    <Square black={black}>
-                        {piece}
-                    </Square>
+                    <BoardSquare x={x} y={y}>
+                        {this._renderPiece(x, y)}
+                    </BoardSquare>
                 </div>
             );
         });
         return squares;
     }
-
+    
+    _renderPiece(x,y){
+        const[knightX, knightY] = this.props.knightPosition;
+        return (x === knightX && y === knightY) ? <Knight /> : null;
+    }
+    
     _handleSquareClick(toX, toY){
-        console.log(`toX: ${toX}   toY: ${toY}`);
+        // console.log(`toX: ${toX}   toY: ${toY}`);
         canMoveKnight(toX, toY) ? moveKnight(toX, toY) : null;
     }
     
@@ -60,4 +71,4 @@ Board.propTypes = {
 }
 
 
-export default Board;
+export default DragDropContext(HTML5Backend)(Board);

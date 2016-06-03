@@ -19,5 +19,12 @@ import {render} from 'react-dom';
 // import Demo from './pages/reactMotionApp/reactMotionApp.jsx';
 // render(<Demo />, document.getElementById('root')); 
 
-import ChessDNDApp from './pages/chessDNDApp/chessDNDApp.jsx';
-render(<ChessDNDApp />, document.getElementById('root'));  
+// import ChessDNDApp from './pages/chessDNDApp/chessDNDApp.jsx';
+// render(<ChessDNDApp />, document.getElementById('root'));  
+
+// import SimpleDNDApp from './pages/simpleDNDApp/simpleDNDApp.jsx';
+// render (<SimpleDNDApp/>, document.getElementById('root'));
+
+
+import DustBinApp from './pages/dustBinApp/dustBinApp.jsx';
+render (<DustBinApp/>, document.getElementById('root'));
