@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { DropTarget } from 'react-dnd';
+import update from 'react-addons-update';
+
 import Basura from './basura.jsx';
 
 
@@ -26,11 +29,27 @@ const styles_bote__title={
     textTransform: 'uppercase',
     textAlign: 'center'
 }
-          
+
+const specDropBasura = {
+    drop(props, monitor, component){
+        return {tipo: props.tipo};
+    }
+}
+
+function collect(connect, monitor) {
+    return {
+        connectDropTarget: connect.dropTarget(),
+        isOver: monitor.isOver(),
+        isOverCurrent: monitor.isOver({shallow: true}),
+        canDrop: monitor.canDrop(),
+        itemType: monitor.getItemType(),
+        item: monitor.getItem()
+    };
+}
+         
 class Bote extends Component{
     _renderContenido(){
         const contenido = this.props.contenido;
-        
         return contenido.map((item, index)=>{
             return(
                 <Basura id={item.id} 
@@ -46,10 +65,20 @@ class Bote extends Component{
     }
     
     render(){
-        return(
+        const { connectDropTarget, canDrop, isOver, item, tipo } = this.props;
+        const backgroundColor = canDrop && (item.tipo == tipo) ? "lightgreen" : "#eee";
+        
+        const newStyle = update(styles_bote__content, {
+            backgroundColor: {
+                $set: backgroundColor
+            }
+        });
+        
+        
+        return connectDropTarget(
             <div className="bote" style={styles}>
                 <h3 className="bote__title" style={styles_bote__title}>{this.props.tipo}</h3>
-                <div className="bote__content" style={styles_bote__content}>
+                <div className="bote__content" style={newStyle}>
                     {this._renderContenido()}
                 </div>
             </div>
@@ -66,4 +95,4 @@ Bote.propTypes = {
     indexBote: PropTypes.number
 }
 
-export default Bote;
+export default DropTarget("BASURA", specDropBasura, collect)(Bote);

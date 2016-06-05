@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import HTML5Backend from 'react-dnd-html5-backend';
+import { DragDropContext } from 'react-dnd';
+
 
 const styles = {
     widht: '500px',
@@ -18,4 +21,4 @@ class ContenedorContext extends Component{
     }
 }
 
-export default ContenedorContext;
+export default DragDropContext(HTML5Backend)(ContenedorContext);
